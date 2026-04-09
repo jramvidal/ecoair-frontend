@@ -1,0 +1,67 @@
+<div class="register-container">
+  <mat-card class="register-card">
+    <mat-card-header>
+      <mat-card-title>Crea tu perfil en EcoAir</mat-card-title>
+      <mat-card-subtitle>Configura tu salud para recibir alertas personalizadas</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onRegister()" #registerForm="ngForm">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre completo</mat-label>
+          <input matInput name="name" [(ngModel)]="userData.name" required>
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correo electrónico</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="userData.email" required>
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" name="password" [(ngModel)]="userData.password" required>
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+
+        <hr class="divider">
+        <p class="section-title">Información de Salud</p>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tu condición física / enfermedad</mat-label>
+          <mat-select name="condition" [(ngModel)]="userData.condition" required>
+            <mat-option value="Asma">Asma</mat-option>
+            <mat-option value="EPOC / Enfisema">EPOC / Enfisema</mat-option>
+            <mat-option value="Enfermedades Cardíacas">Enfermedades Cardíacas</mat-option>
+            <mat-option value="Diabetes">Diabetes</mat-option>
+            <mat-option value="Etapas de la vida">Etapas de la vida (Niños/Mayores)</mat-option>
+            <mat-option value="Alergias estacionales">Alergias estacionales</mat-option>
+            <mat-option value="Autoinmunes">Autoinmunes</mat-option>
+            <mat-option value="Secuelas respiratorias">Secuelas respiratorias</mat-option>
+            <mat-option value="Embarazo">Embarazo</mat-option>
+            <mat-option value="Obesidad mórbida">Obesidad mórbida</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nivel de sensibilidad</mat-label>
+          <mat-select name="sensitivity" [(ngModel)]="userData.sensitivity" required>
+            <mat-option value="Alta">Alta (Grave)</mat-option>
+            <mat-option value="Media">Media (Moderada)</mat-option>
+            <mat-option value="Baja">Baja (Leve)</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="full-width register-button" [disabled]="!registerForm.valid">
+          FINALIZAR REGISTRO
+        </button>
+      </form>
+    </mat-card-content>
+
+    <mat-card-footer>
+      <p class="login-link">¿Ya eres usuario? <a routerLink="/login">Inicia sesión</a></p>
+    </mat-card-footer>
+  </mat-card>
+</div>

@@ -1,0 +1,28 @@
+.sidenav-container {
+  height: 100vh; // Set to full viewport height (100vh).
+}
+
+.sidenav {
+  width: 250px;
+}
+
+.spacer {
+  flex: 1 1 auto; // Align the login button to the right.
+}
+
+.main-content {
+  padding: 0;
+  height: calc(100vh - 64px); // Total height minus the top bar offset.
+  
+  // Enable vertical scrolling when content overflows.
+  overflow-y: auto; 
+  
+  // Opcional: Enable smooth scroll behavior.
+  scroll-behavior: smooth; 
+}
+
+mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}

@@ -1,0 +1,55 @@
+<mat-sidenav-container class="sidenav-container" style="height: 100vh;">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [mode]="'over'" style="width: 250px;">
+    <mat-toolbar>Menú</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/map" (click)="drawer.close()">
+        <mat-icon matListItemIcon>map</mat-icon>
+        <span matListItemTitle>Mapa en tiempo real</span>
+      </a>
+
+      <a mat-list-item routerLink="/favorites" (click)="drawer.close()">
+        <mat-icon matListItemIcon>star</mat-icon>
+        <span matListItemTitle>Mis Favoritos</span>
+      </a>
+
+      <a mat-list-item routerLink="/alerts" (click)="drawer.close()">
+        <mat-icon matListItemIcon>notifications</mat-icon>
+        <span matListItemTitle>Historial de Alertas</span>
+      </a>
+
+      <a mat-list-item routerLink="/admin" *ngIf="userRole === 'admin'" (click)="drawer.close()">
+        <mat-icon matListItemIcon>settings</mat-icon>
+        <span matListItemTitle>Panel Admin</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <a mat-list-item (click)="logout(); drawer.close()" style="cursor: pointer;">
+        <mat-icon matListItemIcon color="warn">logout</mat-icon>
+        <span matListItemTitle>Cerrar Sesión</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="drawer.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>EcoAir</span>
+      
+      <span style="flex: 1 1 auto;"></span>
+
+      <button mat-icon-button routerLink="/alerts" 
+              [matBadge]="alertCount" 
+              [matBadgeHidden]="alertCount === 0" 
+              matBadgeColor="warn">
+        <mat-icon>notifications</mat-icon>
+      </button>
+    </mat-toolbar>
+
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
