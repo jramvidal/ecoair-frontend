@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment'; // IMPORTADO
 
 @Component({
   selector: 'app-admin-panel',
@@ -19,26 +20,26 @@ export class AdminPanelComponent implements OnInit {
   }
 
   loadThresholds() {
-    this.http.get<any[]>('http://localhost:3000/alerts-log/thresholds').subscribe(res => {
+    this.http.get<any[]>(`${environment.apiUrl}/alerts-log/thresholds`).subscribe(res => {
       this.thresholds = res;
     });
   }
 
   loadCronStatus() {
-    this.http.get<any>('http://localhost:3000/stations/cron/status').subscribe(res => {
+    this.http.get<any>(`${environment.apiUrl}/stations/cron/status`).subscribe(res => {
       this.cronFrequency = res.frequency;
     });
   }
 
   updateThreshold(t: any) {
-    this.http.patch(`http://localhost:3000/alerts-log/thresholds/${t.id}`, t).subscribe(() => {
+    this.http.patch(`${environment.apiUrl}/alerts-log/thresholds/${t.id}`, t).subscribe(() => {
       alert('Umbral actualizado con éxito');
     });
   }
 
   setCron(minutes: number) {
     this.loading = true;
-    this.http.post('http://localhost:3000/stations/cron/frequency', { minutes }).subscribe((res: any) => {
+    this.http.post(`${environment.apiUrl}/stations/cron/frequency`, { minutes }).subscribe((res: any) => {
       this.cronFrequency = res.frequency;
       this.loading = false;
     });

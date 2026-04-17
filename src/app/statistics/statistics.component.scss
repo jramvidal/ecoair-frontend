@@ -1,0 +1,119 @@
+// Main container to add space at the top and sides.
+.main-container {
+  padding-top: 60px; 
+  padding-bottom: 60px;
+  
+  padding-left: 40px;
+  padding-right: 40px;
+  
+  max-width: 1300px; 
+  margin: 0 auto;    // Center the entire block on the screen.
+  box-sizing: border-box;
+}
+
+.page-header {
+  margin-bottom: 40px;
+  border-bottom: 2px solid rgba(0,0,0,0.05);
+  padding-bottom: 25px;
+
+  .title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #43a047; // Verde EcoAir
+    
+    h2 { 
+      margin: 0; 
+      font-weight: 700; 
+      font-size: 1.8rem; 
+      letter-spacing: -0.5px;
+    }
+    .title-icon { 
+      font-size: 34px; 
+      width: 34px; 
+      height: 34px; 
+      color: #43a047;
+    }
+  }
+
+  .subtitle { 
+    color: #546e7a; 
+    margin: 10px 0 0 0; 
+    font-size: 1rem; 
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px; 
+}
+
+.stat-card {
+  border-radius: 16px !important;
+  border-top: 6px solid; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  background: white;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12) !important;
+  }
+
+  mat-card-header {
+    margin-bottom: 20px;
+    
+    mat-card-title {
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    mat-card-subtitle {
+      color: #78909c;
+      margin-top: 5px;
+    }
+  }
+}
+
+.average-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+
+  .label {
+    color: #607d8b;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .value {
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+}
+
+.chart-wrapper {
+  height: 240px;
+  position: relative;
+  width: 100%;
+}
+
+/* Mobile adjustments. */
+@media (max-width: 800px) {
+  .main-container {
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

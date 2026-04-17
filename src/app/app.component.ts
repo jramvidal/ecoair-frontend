@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { StationsService } from './stations.service';
 
 @Component({
   selector: 'app-root',
@@ -8,49 +8,43 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  alertCount: number = 0;
-  userRole: string | null = null; // Store the user role for menu navigation.
+  alertCount = 0;
   private intervalId: any;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private stationsService: StationsService) {}
+
+  // Sensor to show/hide the admin panel.
+  get isAdmin(): boolean {
+    return localStorage.getItem('isAdmin') === 'true';
+  }
 
   ngOnInit() {
-    // Fetch initial data.
     this.updateAlertCount();
-    
-    // Refresh cycle every 30 seconds.
-    this.intervalId = setInterval(() => {
-      this.updateAlertCount();
-    }, 30000);
+    // Refresh every 30 seconds (same as your backup).
+    this.intervalId = setInterval(() => this.updateAlertCount(), 30000);
   }
 
   ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 
   updateAlertCount() {
     const userId = localStorage.getItem('userId');
-    // Retrieve the role from localStorage (stored during login).
-    this.userRole = localStorage.getItem('userRole');
-
     if (userId) {
-      this.http.get<{count: number}>(`http://localhost:3000/alerts-log/count/${userId}`).subscribe({
-        next: (res) => this.alertCount = res.count,
-        error: () => console.log('Esperando login para contar alertas...')
+      this.stationsService.getAlertCount(Number(userId)).subscribe({
+        next: (res: any) => {
+          // We ensure the value is assigned as a number.
+          this.alertCount = res.count || 0;
+          console.log('🔔 Valor asignado a la campana:', this.alertCount);
+        },
+        error: () => this.alertCount = 0
       });
-    } else {
-      this.alertCount = 0;
-      this.userRole = null;
     }
   }
 
   logout() {
-    // Clear all session data.
     localStorage.clear();
     this.alertCount = 0;
-    this.userRole = null;
     this.router.navigate(['/login']);
   }
 }

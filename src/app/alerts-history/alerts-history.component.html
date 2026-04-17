@@ -1,0 +1,48 @@
+<div class="main-container">
+  <div class="centered-content">
+    
+    <header class="page-header">
+      <div class="header-main">
+        <div class="title-group">
+          <mat-icon class="title-icon">notifications_active</mat-icon>
+          <h2>Historial de Alertas</h2>
+        </div>
+        <button mat-button color="warn" *ngIf="alerts.length > 0" (click)="deleteAll()" class="btn-clear">
+          <mat-icon>delete_sweep</mat-icon> Borrar todo
+        </button>
+      </div>
+      <p class="subtitle">Revisa las notificaciones recientes sobre la calidad del aire.</p>
+    </header>
+
+    <div *ngIf="alerts.length === 0" class="empty-state">
+      <mat-icon class="success-icon">sentiment_satisfied</mat-icon>
+      <p>Tu historial está vacío. ¡Buen trabajo!</p>
+    </div>
+
+    <div class="alerts-list">
+      <mat-card *ngFor="let alert of alerts" 
+                class="alert-card" 
+                [class.unread-card]="!alert.is_read">
+        
+        <div class="card-content-layout">
+          <div class="info-side">
+            <mat-card-title class="alert-message">
+              <span *ngIf="!alert.is_read" class="unread-dot">●</span>
+              {{ alert.message }}
+            </mat-card-title>
+            
+            <mat-card-subtitle class="alert-date">
+              <mat-icon>schedule</mat-icon> 
+              {{ alert.sent_at | date:'dd/MM/yyyy HH:mm' }}
+            </mat-card-subtitle>
+          </div>
+
+          <button mat-icon-button color="warn" (click)="deleteOne(alert.id)" class="btn-delete" matTooltip="Borrar">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

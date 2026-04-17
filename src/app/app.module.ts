@@ -4,6 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import {
+  BaseChartDirective,
+  provideCharts,
+  withDefaultRegisterables,
+} from 'ng2-charts';
+
 // Angular Material
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -15,7 +21,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatBadgeModule } from '@angular/material/badge'; // <--- AÑADIDO
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +33,7 @@ import { MapComponent } from './map/map.component';
 import { AlertsHistoryComponent } from './alerts-history/alerts-history.component';
 import { FavoritesComponent } from './favorites/favorites.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +44,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     AlertsHistoryComponent,
     FavoritesComponent,
     AdminPanelComponent,
+    StatisticsComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,8 +63,12 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
     MatSelectModule,
     MatDividerModule,
     MatBadgeModule,
+    MatMenuModule,
+    MatTooltipModule,
+    // ------------------------------
+    BaseChartDirective,
   ],
-  providers: [],
+  providers: [provideCharts(withDefaultRegisterables())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

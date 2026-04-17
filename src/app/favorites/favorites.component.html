@@ -1,0 +1,48 @@
+<div class="main-container">
+  <div class="centered-content">
+    
+    <header class="page-header">
+      <div class="title-group">
+        <mat-icon class="title-icon">star</mat-icon>
+        <h2>Mis Lugares Favoritos</h2>
+      </div>
+      <p class="subtitle">Gestiona las estaciones que estás vigilando en tiempo real.</p>
+    </header>
+
+    <div *ngIf="favorites.length === 0" class="empty-state">
+      <mat-icon>location_off</mat-icon>
+      <p>No tienes estaciones favoritas guardadas aún.</p>
+      <button mat-stroked-button color="primary" routerLink="/map">Ir al mapa</button>
+    </div>
+
+    <div class="favorites-list">
+      <mat-card *ngFor="let fav of favorites" 
+                class="fav-card" 
+                [style.border-left-color]="getAqiColor(fav.currentAqi)">
+        
+        <div class="card-main-layout">
+          <div class="info-section">
+            <mat-card-title>{{ fav.alias }}</mat-card-title>
+            <mat-card-subtitle>{{ fav.station.name }}</mat-card-subtitle>
+            
+            <div class="aqi-badge-row">
+              <span class="aqi-value" [style.color]="getAqiColor(fav.currentAqi)">
+                {{ fav.currentAqi }} AQI
+              </span>
+              <span class="status-label" [style.color]="getAqiColor(fav.currentAqi)">
+                • {{ fav.currentAqi < 50 ? 'Aire Limpio' : 'Contaminación Elevada' }}
+              </span>
+            </div>
+          </div>
+
+          <div class="action-section">
+            <button mat-icon-button color="warn" (click)="unfollow(fav.id)" matTooltip="Eliminar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

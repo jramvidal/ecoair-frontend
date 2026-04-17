@@ -21,14 +21,16 @@ export class LoginComponent {
   onLogin() {
     this.authService.login(this.loginData).subscribe({
       next: (user) => {
-        // Store key data in browser storage.
+        // --- Data saving ---
         localStorage.setItem('userId', user.id.toString());
-        localStorage.setItem('userRole', user.role); // 'admin' o 'user'
         localStorage.setItem('userName', user.name);
-
-        alert('¡Bienvenido, ' + user.name + '!');
         
-        // Smart redirection.
+        // We save the original role
+        localStorage.setItem('userRole', user.role); 
+        
+        // If the role is "admin", it will store the text "true"; otherwise, it will store "false".
+        localStorage.setItem('isAdmin', (user.role === 'admin').toString());
+
         if (user.role === 'admin') {
           this.router.navigate(['/admin']);
         } else {

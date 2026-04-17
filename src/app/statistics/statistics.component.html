@@ -1,0 +1,45 @@
+<div class="main-container">
+  
+  <header class="page-header">
+    <div class="title-group">
+      <mat-icon class="title-icon">analytics</mat-icon>
+      <h2>Análisis de Calidad del Aire</h2>
+    </div>
+    <p class="subtitle">Evolución detallada y promedios de tus estaciones seguidas.</p>
+  </header>
+
+  <div *ngIf="chartsData.length === 0" class="empty-state">
+    <mat-icon>show_chart</mat-icon>
+    <p>Estamos recopilando datos de tus estaciones favoritas...</p>
+  </div>
+
+  <div class="stats-grid">
+    <mat-card *ngFor="let chart of chartsData" 
+              class="stat-card" 
+              [style.border-top-color]="chart.color">
+      
+      <mat-card-header>
+        <mat-card-title>{{ chart.stationName }}</mat-card-title>
+        <mat-card-subtitle>
+          Última lectura: <strong>{{ chart.lastAqi }} AQI</strong>
+        </mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="average-badge" [style.background-color]="chart.color + '15'">
+          <span class="label">Media últimas 24h:</span>
+          <span class="value" [style.color]="chart.color">{{ chart.averageAqi }} AQI</span>
+        </div>
+
+        <div class="chart-wrapper">
+          <canvas baseChart
+                  [data]="chart.data"
+                  [options]="lineChartOptions"
+                  [type]="'line'">
+          </canvas>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

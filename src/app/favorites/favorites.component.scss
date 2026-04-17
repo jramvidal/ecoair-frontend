@@ -1,0 +1,127 @@
+/* favorites.component.scss */
+
+// 1. We ensure that the container respects the boundaries
+.centered-content {
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 60px;
+  padding-bottom: 40px;
+
+  // We add a small default side safety margin
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.page-header {
+  margin-bottom: 35px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 20px;
+  /* Also prevent the header from overflowing. */
+  width: 100%;
+  box-sizing: border-box;
+
+  .title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #43a047;
+
+    h2 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.6rem;
+      word-break: break-word;
+    }
+  }
+
+  .subtitle {
+    display: block; // So that it behaves as an independent block
+    margin-top: 15px; 
+    color: #546e7a; 
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+}
+
+.favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%; // Ensure the list is not wider than its parent container
+  box-sizing: border-box;
+}
+
+.fav-card {
+  border-radius: 16px !important;
+  border-left: 6px solid;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+  padding: 16px !important;
+
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box !important;
+  margin: 0; // We remove any external margin that could push the layout outward
+
+  transition: all 0.3s ease;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  }
+}
+
+.card-main-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.info-section {
+  flex: 1;
+  min-width: 0; // Mandatory so that the text respects the flex container
+
+  mat-card-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #2c3e50;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  mat-card-subtitle {
+    display: block;
+    color: #78909c;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Final adjustment for mobile */
+@media (max-width: 600px) {
+  .centered-content {
+    padding-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .card-main-layout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-section {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+}

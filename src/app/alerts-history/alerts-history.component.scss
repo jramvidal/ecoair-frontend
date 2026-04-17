@@ -1,0 +1,154 @@
+/* alerts-history.component.scss */
+
+.centered-content {
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+  
+  /* We ensure that the container does not overflow */
+  box-sizing: border-box; 
+  padding-top: 60px; 
+  padding-bottom: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.page-header {
+  margin-bottom: 35px;
+  border-bottom: 2px solid rgba(0,0,0,0.05);
+  padding-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+
+  .header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; // In case the clear button is too wide
+    gap: 10px;
+  }
+
+  .title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #43a047; 
+    
+    h2 { 
+      margin: 0; 
+      font-weight: 700; 
+      font-size: 1.6rem; 
+      letter-spacing: -0.5px;
+      word-break: break-word; // Prevents the title from breaking the layout
+    }
+    .title-icon { font-size: 30px; width: 30px; height: 30px; }
+  }
+
+  .subtitle { 
+    color: #546e7a; 
+    margin: 10px 0 0 0; 
+    font-size: 0.95rem; 
+  }
+}
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.alert-card {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box !important;
+  margin: 0; 
+
+  border-radius: 16px !important; 
+  border-left: 6px solid #cfd8dc; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+
+  &.unread-card {
+    background-color: #fff8f7 !important;
+    border-left-color: #ef5350; 
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1) !important;
+  }
+}
+
+.card-content-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px; // A bit more compact to save space
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.info-side {
+  /* min-width: 0 forces the text to wrap onto the next line */
+  flex: 1;
+  min-width: 0; 
+  padding-right: 15px;
+
+  .alert-message {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #2c3e50;
+    margin: 0;
+    
+    /* We force a line break in the message */
+    white-space: normal; 
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
+  .unread-dot {
+    color: #ef5350;
+    margin-right: 8px;
+  }
+
+  .alert-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: #78909c; 
+    
+    mat-icon { font-size: 14px; width: 14px; height: 14px; }
+  }
+}
+
+/* Responsive for mobile devices */
+@media (max-width: 600px) {
+  .centered-content {
+    padding-top: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .card-content-layout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .info-side {
+    padding-right: 0;
+    margin-bottom: 12px;
+  }
+
+  .btn-delete {
+    align-self: flex-end; // Move the trash icon to the bottom right corner
+  }
+}

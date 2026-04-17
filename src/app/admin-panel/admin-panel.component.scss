@@ -1,0 +1,131 @@
+/* admin-panel.component.scss */
+
+.centered-content {
+  max-width: 850px; // Un poco más ancho para la tabla en escritorio
+  margin: 0 auto;
+  width: 100%;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+.page-header {
+  margin-bottom: 30px;
+  .title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #2e7d32;
+    h2 { margin: 0; font-weight: 700; font-size: 1.7rem; }
+  }
+  .subtitle { color: #666; margin-top: 5px; }
+}
+
+.admin-card {
+  margin-bottom: 25px;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+  border-top: 5px solid #43a047;
+}
+
+.admin-content {
+  /* Este es el espacio entre "Frecuencia: 1 hora" y el contenido de abajo */
+  padding-top: 20px !important; 
+  box-sizing: border-box;
+
+  p {
+    /* Este es el espacio entre el texto descriptivo y los botones */
+    margin-bottom: 20px;
+    color: #546e7a;
+    font-size: 0.95rem;
+  }
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  button { flex: 1; min-width: 150px; border-radius: 20px; }
+}
+
+/* --- DISEÑO DE TABLA RESPONSIVE --- */
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th {
+    text-align: left;
+    background: #f8f9fa;
+    padding: 12px;
+    color: #546e7a;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-bottom: 2px solid #eee;
+  }
+
+  td { padding: 12px; border-bottom: 1px solid #eee; }
+}
+
+.mobile-label { display: none; } // Oculto en escritorio
+
+.condition-info {
+  .main-text { display: block; font-weight: 600; color: #333; }
+  .sub-text { display: block; font-size: 0.75rem; color: #888; }
+}
+
+.admin-input {
+  border: 1px solid #cfd8dc;
+  border-radius: 6px;
+  padding: 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
+  &:focus { border-color: #43a047; outline: none; background: #f1f8e9; }
+  &.aqi-input { max-width: 80px; }
+}
+
+/* STACKED */
+@media (max-width: 768px) {
+  .centered-content { padding-top: 20px; }
+
+  // 1. We hide the table header
+  .responsive-table thead { display: none; }
+
+  // 2. Each row becomes a “card”
+  .responsive-tr {
+    display: block;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fafafa;
+  }
+
+  // 3. Each cell becomes a vertical block
+  .responsive-table td {
+    display: flex;
+    flex-direction: column;
+    border-bottom: none;
+    padding: 8px 12px;
+  }
+
+  // 4. We display the labels (Condition, AQI, etc.)
+  .mobile-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #90a4ae;
+    margin-bottom: 4px;
+  }
+
+  .admin-input.aqi-input { max-width: 100%; } // Full-width input on mobile
+
+  .mobile-save-btn {
+    width: 100%;
+    margin-top: 10px;
+    height: 45px;
+    border-radius: 8px;
+  }
+  
+  .text-center { text-align: left; }
+}

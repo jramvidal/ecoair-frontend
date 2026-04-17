@@ -1,60 +1,80 @@
-<div style="padding: 20px 20px 40px 20px; max-width: 900px; margin: 0 auto;">
-  <h2 style="color: #3f51b5; display: flex; align-items: center; gap: 10px;">
-    <mat-icon>settings</mat-icon> Panel de Administración
-  </h2>
-  <hr>
-
-  <mat-card style="margin-bottom: 30px; border-top: 4px solid #4caf50;">
-    <mat-card-header>
-      <mat-card-title>Control de Sincronización Automática</mat-card-title>
-      <mat-card-subtitle>Frecuencia actual: <b>{{ cronFrequency }}</b></mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content style="padding-top: 20px;">
-      <p>Ajusta el tiempo de recogida de datos de estaciones favoritas:</p>
-      <div style="display: flex; gap: 15px;">
-        <button mat-raised-button color="warn" (click)="setCron(1)" [disabled]="loading">
-          <mat-icon>speed</mat-icon> Modo Prueba (1 min)
-        </button>
-        <button mat-raised-button color="primary" (click)="setCron(60)" [disabled]="loading">
-          <mat-icon>schedule</mat-icon> Modo Producción (1 h)
-        </button>
+<div class="main-container">
+  <div class="centered-content">
+    
+    <header class="page-header">
+      <div class="title-group">
+        <mat-icon class="title-icon">settings</mat-icon>
+        <h2>Panel de Administración</h2>
       </div>
-    </mat-card-content>
-  </mat-card>
+      <p class="subtitle">Configuración global del sistema EcoAir.</p>
+    </header>
 
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Configuración de Umbrales de Alerta</mat-card-title>
-    </mat-card-header>
-    <mat-card-content style="padding-top: 20px;">
-      <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-          <tr style="text-align: left; background: #f5f5f5;">
-            <th style="padding: 10px;">Condición</th>
-            <th>Sensibilidad</th>
-            <th style="width: 100px;">AQI Mín</th>
-            <th>Mensaje de Alerta</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let t of thresholds" style="border-bottom: 1px solid #eee;">
-            <td style="padding: 10px;">{{ t.condition }}</td>
-            <td>{{ t.sensitivity }}</td>
-            <td>
-              <input type="number" [(ngModel)]="t.min_aqi" style="width: 60px; padding: 5px;">
-            </td>
-            <td>
-              <input type="text" [(ngModel)]="t.message_template" style="width: 90%; padding: 5px;">
-            </td>
-            <td>
-              <button mat-icon-button color="primary" (click)="updateThreshold(t)">
-                <mat-icon>save</mat-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </mat-card-content>
-  </mat-card>
+    <mat-card class="admin-card">
+      <mat-card-header>
+        <mat-card-title>Sincronización</mat-card-title>
+        <mat-card-subtitle>Frecuencia: <strong>{{ cronFrequency }}</strong></mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content class="admin-content">
+        <div class="button-group">
+          <button mat-raised-button color="warn" (click)="setCron(1)" [disabled]="loading">
+            <mat-icon>speed</mat-icon> Prueba (1 min)
+          </button>
+          <button mat-raised-button color="primary" (click)="setCron(60)" [disabled]="loading">
+            <mat-icon>schedule</mat-icon> Producción (1 h)
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="admin-card">
+      <mat-card-header>
+        <mat-card-title>Umbrales de Alerta</mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content class="admin-content">
+        <div class="table-container">
+          <table class="responsive-table">
+            <thead>
+              <tr>
+                <th>Condición</th>
+                <th>AQI Mín</th>
+                <th>Mensaje</th>
+                <th class="text-center">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of thresholds" class="responsive-tr">
+                <td class="cell-condition">
+                  <span class="mobile-label">Condición:</span>
+                  <div class="condition-info">
+                    <span class="main-text">{{ t.condition }}</span>
+                    <span class="sub-text">{{ t.sensitivity }}</span>
+                  </div>
+                </td>
+
+                <td class="cell-aqi">
+                  <span class="mobile-label">AQI Mínimo:</span>
+                  <input type="number" [(ngModel)]="t.min_aqi" class="admin-input aqi-input">
+                </td>
+
+                <td class="cell-message">
+                  <span class="mobile-label">Mensaje de Alerta:</span>
+                  <input type="text" [(ngModel)]="t.message_template" class="admin-input msg-input">
+                </td>
+
+                <td class="cell-action text-center">
+                  <button mat-flat-button color="primary" (click)="updateThreshold(t)" class="mobile-save-btn">
+                    <mat-icon>save</mat-icon> <span>Guardar Cambios</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="spacer"></div>
+  </div>
 </div>

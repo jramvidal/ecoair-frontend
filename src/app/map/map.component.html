@@ -1,11 +1,52 @@
 <div class="map-container">
-  <mat-toolbar color="primary" class="map-header">
-    <span>Calidad del Aire en Tiempo Real</span>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
-  </mat-toolbar>
+  <div class="map-wrapper">
+    <div id="map"></div>
 
-  <div id="map"></div>
+    <mat-card class="dashboard-card" *ngIf="showSummaryCard">
+      <mat-card-header>
+        <mat-card-title>Bienvenido, {{ userName }}</mat-card-title>
+        <button mat-icon-button class="close-btn" (click)="closeCard()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-card-header>
+      
+      <mat-card-content class="dashboard-content">
+        <p class="favorites-label">Estaciones de medición de aire favoritas</p>
+        
+        <div *ngFor="let st of favoriteDetails" class="station-block">
+          <p class="station-name">{{ st.name }}</p>
+          
+          <div class="aqi-row">
+            <div class="aqi-item">
+              <span class="aqi-value" [style.color]="getAqiColor(st.currentAqi)">{{ st.currentAqi }}</span>
+              <span class="aqi-label">AQI Actual</span>
+            </div>
+            <div class="aqi-item">
+              <span class="aqi-value" [style.color]="getAqiColor(st.averageAqi)">{{ st.averageAqi }}</span>
+              <span class="aqi-label">Media 24h</span>
+            </div>
+          </div>
+
+          <div class="pollutants-row">
+            <span>PM2.5: <strong>{{ st.pm25 }}</strong></span>
+            <span>NO2: <strong>{{ st.no2 }}</strong></span>
+          </div>
+        </div>
+
+        <div class="status-message" [class.danger]="isAnyContaminated">
+          <mat-icon>{{ isAnyContaminated ? 'warning' : 'verified_user' }}</mat-icon>
+          <div>
+            <p class="status-title">Estado: {{ isAnyContaminated ? 'Aire contaminado' : 'Aire Limpio' }}</p>
+            <p class="status-desc">
+              {{ isAnyContaminated ? 'Compruebe las recomendaciones en la sección de alertas.' : 'Calidad óptima.' }}
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions align="end">
+        <button mat-button color="primary" routerLink="/statistics">DETALLES</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

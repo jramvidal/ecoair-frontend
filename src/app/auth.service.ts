@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../environments/environment'; // IMPORTANTE: Importamos la configuración de entorno
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users';
+  // Sustituimos la URL fija por la del entorno
+  private apiUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {}
 
@@ -17,9 +19,8 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((user: any) => {
-        // Store the ID to identify the owner of the map favorite.
+        // Guardamos los datos en localStorage al iniciar sesión
         localStorage.setItem('userId', user.id);
-
         localStorage.setItem('role', user.role);
         localStorage.setItem('userName', user.name);
         localStorage.setItem('token', 'token-ficticio-sesion-activa');
@@ -29,6 +30,12 @@ export class AuthService {
         }
       }),
     );
+  }
+
+  // --- Método para obtener el ID del usuario logueado ---
+  getUserId(): number | null {
+    const id = localStorage.getItem('userId');
+    return id ? parseInt(id, 10) : null;
   }
 
   logout() {
