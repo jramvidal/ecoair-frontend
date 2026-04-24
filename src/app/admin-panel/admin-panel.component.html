@@ -1,6 +1,5 @@
 <div class="main-container">
   <div class="centered-content">
-    
     <header class="page-header">
       <div class="title-group">
         <mat-icon class="title-icon">settings</mat-icon>
@@ -12,15 +11,27 @@
     <mat-card class="admin-card">
       <mat-card-header>
         <mat-card-title>Sincronización</mat-card-title>
-        <mat-card-subtitle>Frecuencia: <strong>{{ cronFrequency }}</strong></mat-card-subtitle>
+        <mat-card-subtitle
+          >Frecuencia: <strong>{{ cronFrequency }}</strong></mat-card-subtitle
+        >
       </mat-card-header>
-      
+
       <mat-card-content class="admin-content">
         <div class="button-group">
-          <button mat-raised-button color="warn" (click)="setCron(1)" [disabled]="loading">
-            <mat-icon>speed</mat-icon> Prueba (1 min)
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="setCron(2)"
+            [disabled]="loading"
+          >
+            <mat-icon>speed</mat-icon> Prueba (2 min)
           </button>
-          <button mat-raised-button color="primary" (click)="setCron(60)" [disabled]="loading">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="setCron(60)"
+            [disabled]="loading"
+          >
             <mat-icon>schedule</mat-icon> Producción (1 h)
           </button>
         </div>
@@ -31,7 +42,7 @@
       <mat-card-header>
         <mat-card-title>Umbrales de Alerta</mat-card-title>
       </mat-card-header>
-      
+
       <mat-card-content class="admin-content">
         <div class="table-container">
           <table class="responsive-table">
@@ -55,16 +66,29 @@
 
                 <td class="cell-aqi">
                   <span class="mobile-label">AQI Mínimo:</span>
-                  <input type="number" [(ngModel)]="t.min_aqi" class="admin-input aqi-input">
+                  <input
+                    type="number"
+                    [(ngModel)]="t.min_aqi"
+                    class="admin-input aqi-input"
+                  />
                 </td>
 
                 <td class="cell-message">
                   <span class="mobile-label">Mensaje de Alerta:</span>
-                  <input type="text" [(ngModel)]="t.message_template" class="admin-input msg-input">
+                  <input
+                    type="text"
+                    [(ngModel)]="t.message_template"
+                    class="admin-input msg-input"
+                  />
                 </td>
 
                 <td class="cell-action text-center">
-                  <button mat-flat-button color="primary" (click)="updateThreshold(t)" class="mobile-save-btn">
+                  <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="updateThreshold(t)"
+                    class="mobile-save-btn"
+                  >
                     <mat-icon>save</mat-icon> <span>Guardar Cambios</span>
                   </button>
                 </td>
