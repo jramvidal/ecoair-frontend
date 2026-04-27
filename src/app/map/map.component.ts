@@ -98,7 +98,7 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
       this.map.invalidateSize();
       console.log("🔍 Intentando localizar al usuario...");
       this.map.locate({ 
-        setView: false, 
+        setView: true, 
         maxZoom: 14,
         enableHighAccuracy: true // Higher precision for mobile devices.
       });
