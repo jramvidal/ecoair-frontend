@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // MODIFICADO
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import {
   BaseChartDirective,
@@ -52,7 +51,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, // AÑADIDO
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -67,7 +66,6 @@ import { StatisticsComponent } from './statistics/statistics.component';
     MatBadgeModule,
     MatMenuModule,
     MatTooltipModule,
-    // ------------------------------
     BaseChartDirective,
   ],
   providers: [provideCharts(withDefaultRegisterables())],
