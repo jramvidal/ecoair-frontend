@@ -30,16 +30,20 @@
               [matBadge]="alertCount" 
               [matBadgeHidden]="alertCount <= 0" 
               matBadgeColor="accent"
-              matTooltip="Ver alertas">
-        <mat-icon>notifications</mat-icon>
+              matTooltip="Ver alertas"
+              matTooltipPosition="below"> <mat-icon>notifications</mat-icon>
       </button>
 
-      <button mat-icon-button routerLink="/login" matTooltip="Mi Perfil">
-        <mat-icon>account_circle</mat-icon>
+      <button mat-icon-button 
+              routerLink="/login" 
+              matTooltip="Mi Perfil"
+              matTooltipPosition="below"> <mat-icon>account_circle</mat-icon>
       </button>
 
-      <button mat-icon-button (click)="logout()" matTooltip="Cerrar sesión">
-        <mat-icon>logout</mat-icon>
+      <button mat-icon-button 
+              (click)="logout()" 
+              matTooltip="Cerrar sesión"
+              matTooltipPosition="below"> <mat-icon>logout</mat-icon>
       </button>
     </div>
   </mat-toolbar>

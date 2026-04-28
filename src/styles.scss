@@ -1,10 +1,9 @@
 @use '@angular/material' as mat;
 
-// 1.Basic configuration.
+// 1. Basic configuration.
 @include mat.core();
 
 $eco-primary: mat.define-palette(mat.$green-palette, 600, 700, 300);
-// Un azul cielo/teal para acentos (simboliza aire limpio)
 $eco-accent:  mat.define-palette(mat.$blue-grey-palette, A200, A100, A400);
 $eco-warn:    mat.define-palette(mat.$red-palette); 
 
@@ -21,8 +20,8 @@ $eco-theme: mat.define-light-theme((
     accent: $eco-accent,
     warn: $eco-warn,
   ),
-  typography: $eco-typography, // Añadimos la tipografía aquí
-  density: 0, // 0 es el estándar, -1 o -2 lo hace más compacto (bueno para móviles)
+  typography: $eco-typography,
+  density: 0,
 ));
 
 // 5. Aplicar el tema
@@ -45,4 +44,21 @@ html, body {
   margin-right: 4px;
   vertical-align: middle;
   object-fit: contain;
+}
+
+// FIX PARA TOOLTIPS (TEXTOS EMERGENTES)
+// Esto asegura que la capa de etiquetas esté por encima de la barra de navegación
+.cdk-overlay-container {
+  z-index: 2000 !important; 
+}
+
+// Ajuste fino para tooltips modernos (MDC)
+.mat-mdc-tooltip-panel {
+  // Empujamos el tooltip 12px hacia abajo para que respire fuera de la barra de 85px
+  margin-top: 12px !important; 
+}
+
+.mat-mdc-tooltip .mdc-tooltip__surface {
+  background-color: rgba(44, 62, 80, 0.9) !important; // Un tono azulado oscuro acorde a tu color de texto
+  font-size: 12px !important;
 }
