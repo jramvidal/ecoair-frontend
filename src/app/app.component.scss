@@ -1,3 +1,4 @@
+/* Main application layout container */
 .app-container {
   display: flex;
   flex-direction: column;
@@ -6,31 +7,97 @@
   overflow: hidden;
 }
 
+/* Main toolbar styling */
 .main-header {
   height: 85px !important;
   background-color: #43a047 !important;
   color: white !important;
-  z-index: 1000; // Bajado ligeramente para que el overlay gane
-  flex-shrink: 0;
-  overflow: visible !important; // Permitir que salgan los tooltips
+  flex-shrink: 0; // Prevents the header from collapsing
+  z-index: 1000; 
+  overflow: visible !important; // Required for tooltips to display correctly
 
-  .left-section { display: flex; align-items: center; gap: 8px; }
-  .logo-area { display: flex; align-items: center; gap: 12px; cursor: pointer; }
-  .logo-text { font-size: 30px !important; font-weight: 700; } // Usando tu valor de 30px
-  .nav-links { margin-left: 20px; button { color: white; margin: 0 5px; } }
-  .active-link { background: rgba(255,255,255,0.2); }
-  .spacer { flex: 1 1 auto; }
+  .left-section { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+  }
+
+  .logo-area { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    cursor: pointer; 
+  }
+
+  .logo-text { 
+    font-size: 30px !important; 
+    font-weight: 700; 
+  }
+
+  .nav-links { 
+    margin-left: 20px; 
+    button { 
+      color: white; 
+      margin: 0 5px; 
+    } 
+  }
+
+  /* Style for active navigation links (left side and login button) */
+  .active-link { 
+    background: rgba(255, 255, 255, 0.2) !important; 
+    border-radius: 4px;
+  }
+
+  .spacer { 
+    flex: 1 1 auto; 
+  }
+
   .desktop-only { display: flex !important; }
   .mobile-only { display: none !important; }
 
+  /* Login and Register buttons section */
   .action-section {
     display: flex;
     align-items: center;
     gap: 8px;
     overflow: visible !important;
+
+    // Login button style (discreet text)
+    button[routerLink="/login"] {
+      color: white !important;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+      }
+    }
+
+    // Register button style (Option A: prominent white button)
+    button[routerLink="/register"] {
+      background-color: white !important;
+      color: #43a047 !important; 
+      font-weight: bold;
+      border-radius: 20px !important; 
+      margin-left: 12px; // Space to separate it from the Login text
+      padding: 0 25px !important;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: #f1f8e9 !important; 
+      }
+    }
+
+    // Highlighting for the Register button when its route is active
+    .active-register {
+      background-color: #e8f5e9 !important; // Light mint green
+      border: 1px solid #2e7d32 !important;
+      color: #1b5e20 !important;
+    }
   }
 }
 
+/* Main content scrolling area */
 .content-area {
   flex: 1; 
   width: 100%;
@@ -42,6 +109,7 @@
   background-color: #f5f5f5;
 }
 
+/* Internal container for page content */
 .main-container {
   width: 100%;
   max-width: 1100px;
@@ -50,6 +118,7 @@
   box-sizing: border-box;
 }
 
+/* Responsive adjustments for mobile devices */
 @media (max-width: 800px) {
   .main-header {
     height: 60px !important;
@@ -58,47 +127,9 @@
   }
 }
 
+/* Global badge styling */
 ::ng-deep .mat-badge-content {
   font-size: 11px !important;
   font-weight: bold !important;
   z-index: 1200 !important;
-}
-
-.main-header {
-  .action-section {
-    // Botón "REGISTRARSE" (el destacado)
-    button[routerLink="/register"] {
-      background-color: white !important;
-      color: #43a047 !important; 
-      font-weight: bold;
-      border-radius: 20px !important; 
-      margin-left: 12px;
-      padding: 0 20px;
-      
-      &:hover {
-        background-color: #f1f8e9 !important; 
-      }
-    }
-
-    
-    button[routerLink="/login"] {
-      color: white !important;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-      
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-      }
-    }
-  }
-}
-
-
-.action-section button[routerLink="/login"]::after {
-  content: "";
-  margin-left: 15px;
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
-  height: 20px;
-  display: inline-block;
-  vertical-align: middle;
 }

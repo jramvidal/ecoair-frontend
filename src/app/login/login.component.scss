@@ -8,13 +8,18 @@
 
 .login-card {
   width: 100%;
-  max-width: 460px; // Unificado
+  max-width: 460px; // Unified width
   padding: 20px;
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+
+  // Adjustment A: Increased space between title/subtitle and the form
+  mat-card-header {
+    margin-bottom: 30px !important;
+  }
 }
 
-// Iconos en verde
+// Icons in green
 mat-form-field .mat-icon {
   color: #2e7d32 !important;
   opacity: 0.8;
@@ -37,9 +42,19 @@ mat-form-field .mat-icon {
   }
 }
 
-.register-text a {
-  color: #2e7d32;
-  font-weight: bold;
-  text-decoration: none;
-  &:hover { color: #1b5e20; text-decoration: underline; }
+// Adjustment B: Footer text aligned to the left matching the input fields
+.register-text {
+  text-align: left !important;
+  padding: 10px 16px 20px 16px !important; // Added padding to align vertically with the inputs
+  font-size: 0.9em;
+
+  a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover { 
+      color: #1b5e20; 
+      text-decoration: underline; 
+    }
+  }
 }

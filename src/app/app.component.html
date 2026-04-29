@@ -49,8 +49,9 @@
       </ng-container>
 
       <ng-template #loginBtn>
-        <button mat-button routerLink="/login">INICIAR SESIÓN</button>
-        <button mat-raised-button color="accent" routerLink="/register">REGISTRO</button>
+        <!-- Added routerLinkActive to match navigation behavior -->
+        <button mat-button routerLink="/login" routerLinkActive="active-link">INICIAR SESIÓN</button>
+        <button mat-raised-button routerLink="/register" routerLinkActive="active-register">REGISTRO</button>
       </ng-template>
     </div>
   </mat-toolbar>

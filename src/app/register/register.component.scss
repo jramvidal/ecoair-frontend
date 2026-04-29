@@ -9,13 +9,18 @@
 
 .register-card {
   width: 100%;
-  max-width: 460px; // Unificado
+  max-width: 460px; // Unified width for all forms
   padding: 15px;
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
+
+  // Adjustment A: Increased space between title/subtitle and the form fields
+  mat-card-header {
+    margin-bottom: 30px !important;
+  }
 }
 
-// Iconos en verde
+// Brand green color for icons
 mat-form-field .mat-icon {
   color: #2e7d32 !important;
 }
@@ -27,7 +32,7 @@ mat-form-field .mat-icon {
 
 .section-title {
   font-weight: bold;
-  color: #757575; // Gris profesional como en Perfil
+  color: #757575; // Professional gray for section headers
   font-size: 0.85em;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -40,15 +45,26 @@ mat-form-field .mat-icon {
   font-weight: bold;
   border-radius: 8px !important;
 
+  // Primary action button style (Green when active)
   &:not(:disabled) {
     background-color: #43a047 !important;
     color: white !important;
   }
 }
 
-.login-link a {
-  color: #2e7d32;
-  font-weight: bold;
-  text-decoration: none;
-  &:hover { color: #1b5e20; text-decoration: underline; }
+// Adjustment B: Footer text aligned to the left matching input field boundaries
+.login-link {
+  text-align: left !important;
+  padding: 10px 16px 25px 16px !important; // 16px left padding for perfect alignment
+  font-size: 0.9em;
+
+  a {
+    color: #2e7d32;
+    font-weight: bold;
+    text-decoration: none;
+    &:hover { 
+      color: #1b5e20; 
+      text-decoration: underline; 
+    }
+  }
 }
