@@ -63,3 +63,42 @@
   font-weight: bold !important;
   z-index: 1200 !important;
 }
+
+.main-header {
+  .action-section {
+    // Botón "REGISTRARSE" (el destacado)
+    button[routerLink="/register"] {
+      background-color: white !important;
+      color: #43a047 !important; 
+      font-weight: bold;
+      border-radius: 20px !important; 
+      margin-left: 12px;
+      padding: 0 20px;
+      
+      &:hover {
+        background-color: #f1f8e9 !important; 
+      }
+    }
+
+    
+    button[routerLink="/login"] {
+      color: white !important;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+      }
+    }
+  }
+}
+
+
+.action-section button[routerLink="/login"]::after {
+  content: "";
+  margin-left: 15px;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+}

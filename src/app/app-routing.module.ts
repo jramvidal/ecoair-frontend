@@ -7,6 +7,7 @@ import { AlertsHistoryComponent } from './alerts-history/alerts-history.componen
 import { FavoritesComponent } from './favorites/favorites.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ProfileComponent } from './profile/profile.component'; // Importación necesaria
 import { AdminGuard } from './auth/admin.guard';
 
 const routes: Routes = [
@@ -15,8 +16,8 @@ const routes: Routes = [
   { path: 'map', component: MapComponent },
   { path: 'alerts', component: AlertsHistoryComponent },
   { path: 'favorites', component: FavoritesComponent },
-  
-  { path: 'statistics', component: StatisticsComponent }, 
+  { path: 'statistics', component: StatisticsComponent },
+  { path: 'profile', component: ProfileComponent }, // Nueva ruta registrada
   
   {
     path: 'admin',

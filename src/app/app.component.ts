@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { StationsService } from './stations.service';
+import { AuthService } from './auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,41 +11,58 @@ import { StationsService } from './stations.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   alertCount = 0;
+  isLoggedIn = false;
   private intervalId: any;
+  private authSub!: Subscription;
 
-  constructor(private router: Router, private stationsService: StationsService) {}
+  constructor(
+    private router: Router, 
+    private stationsService: StationsService,
+    private authService: AuthService
+  ) {}
 
-  // Sensor to show/hide the admin panel.
   get isAdmin(): boolean {
-    return localStorage.getItem('isAdmin') === 'true';
+    return localStorage.getItem('role') === 'admin';
+  }
+
+  get userName(): string {
+    return localStorage.getItem('userName') || 'Usuario';
   }
 
   ngOnInit() {
-    this.updateAlertCount();
-    // Refresh every 30 seconds (same as your backup).
-    this.intervalId = setInterval(() => this.updateAlertCount(), 30000);
+    // Escuchamos el estado de la sesión en tiempo real
+    this.authSub = this.authService.isLoggedIn$.subscribe(status => {
+      this.isLoggedIn = status;
+      if (status) {
+        this.updateAlertCount();
+      }
+    });
+
+    this.intervalId = setInterval(() => {
+      if (this.isLoggedIn) this.updateAlertCount();
+    }, 20000);
   }
 
   ngOnDestroy() {
     if (this.intervalId) clearInterval(this.intervalId);
+    if (this.authSub) this.authSub.unsubscribe();
   }
 
   updateAlertCount() {
-    const userId = localStorage.getItem('userId');
+    const userId = this.authService.getUserId();
     if (userId) {
-      this.stationsService.getAlertCount(Number(userId)).subscribe({
+      this.stationsService.getAlertCount(userId).subscribe({
         next: (res: any) => {
-          // We ensure the value is assigned as a number.
-          this.alertCount = res.count || 0;
-          console.log('🔔 Valor asignado a la campana:', this.alertCount);
-        },
-        error: () => this.alertCount = 0
+          if (res && typeof res.count === 'number') {
+            this.alertCount = res.count;
+          }
+        }
       });
     }
   }
 
   logout() {
-    localStorage.clear();
+    this.authService.logout();
     this.alertCount = 0;
     this.router.navigate(['/login']);
   }

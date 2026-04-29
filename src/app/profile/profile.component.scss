@@ -1,15 +1,16 @@
-.login-container {
+.profile-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: calc(100vh - 85px);
   background-color: #f4f7f6;
+  padding: 40px 20px;
 }
 
-.login-card {
+.profile-card {
   width: 100%;
   max-width: 460px; // Unificado
-  padding: 20px;
+  padding: 15px;
   border-radius: 12px !important;
   box-shadow: 0 4px 20px rgba(0,0,0,0.08) !important;
 }
@@ -17,29 +18,43 @@
 // Iconos en verde
 mat-form-field .mat-icon {
   color: #2e7d32 !important;
-  opacity: 0.8;
+}
+
+.profile-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  color: #2e7d32;
 }
 
 .full-width {
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 }
 
-.login-button {
+.section-title {
+  font-weight: bold;
+  color: #757575;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.update-button {
   height: 52px;
-  margin-top: 15px;
+  margin-top: 10px;
   font-weight: bold;
   border-radius: 8px !important;
+  transition: all 0.3s ease;
 
   &:not(:disabled) {
     background-color: #43a047 !important;
     color: white !important;
   }
-}
 
-.register-text a {
-  color: #2e7d32;
-  font-weight: bold;
-  text-decoration: none;
-  &:hover { color: #1b5e20; text-decoration: underline; }
+  &:disabled {
+    background-color: #e0e0e0 !important;
+    color: #a1a1a1 !important;
+  }
 }

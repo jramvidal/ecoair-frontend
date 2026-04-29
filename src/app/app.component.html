@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <nav class="desktop-only nav-links">
+    <nav class="desktop-only nav-links" *ngIf="isLoggedIn">
       <button mat-button routerLink="/map" routerLinkActive="active-link">MAPA</button>
       <button mat-button routerLink="/favorites" routerLinkActive="active-link">FAVORITOS</button>
       <button mat-button routerLink="/alerts" routerLinkActive="active-link">ALERTAS</button>
@@ -25,49 +25,52 @@
     <span class="spacer"></span>
 
     <div class="action-section">
-      <button mat-icon-button 
-              routerLink="/alerts" 
-              [matBadge]="alertCount" 
-              [matBadgeHidden]="alertCount <= 0" 
-              matBadgeColor="accent"
-              matTooltip="Ver alertas"
-              matTooltipPosition="below"> <mat-icon>notifications</mat-icon>
-      </button>
+      <ng-container *ngIf="isLoggedIn; else loginBtn">
+        <button mat-icon-button 
+                routerLink="/alerts" 
+                [matBadge]="alertCount" 
+                [matBadgeHidden]="alertCount <= 0" 
+                matBadgeColor="accent"
+                matTooltip="Ver alertas"
+                matTooltipPosition="below">
+          <mat-icon>notifications</mat-icon>
+        </button>
 
-      <button mat-icon-button 
-              routerLink="/login" 
-              matTooltip="Mi Perfil"
-              matTooltipPosition="below"> <mat-icon>account_circle</mat-icon>
-      </button>
+        <button mat-icon-button 
+                routerLink="/profile" 
+                matTooltip="Mi Perfil: {{userName}}"
+                matTooltipPosition="below">
+          <mat-icon>account_circle</mat-icon>
+        </button>
 
-      <button mat-icon-button 
-              (click)="logout()" 
-              matTooltip="Cerrar sesión"
-              matTooltipPosition="below"> <mat-icon>logout</mat-icon>
-      </button>
+        <button mat-icon-button (click)="logout()" matTooltip="Cerrar sesión" matTooltipPosition="below">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </ng-container>
+
+      <ng-template #loginBtn>
+        <button mat-button routerLink="/login">INICIAR SESIÓN</button>
+        <button mat-raised-button color="accent" routerLink="/register">REGISTRO</button>
+      </ng-template>
     </div>
   </mat-toolbar>
 
   <mat-menu #mainMenu="matMenu">
-    <button mat-menu-item routerLink="/map">
-      <mat-icon>map</mat-icon><span>Mapa</span>
-    </button>
-    <button mat-menu-item routerLink="/favorites">
-      <mat-icon>star</mat-icon><span>Favoritos</span>
-    </button>
-    <button mat-menu-item routerLink="/alerts">
-      <mat-icon>notifications_active</mat-icon><span>Alertas</span>
-    </button>
-    <button mat-menu-item routerLink="/statistics">
-      <mat-icon>bar_chart</mat-icon><span>Estadísticas</span>
-    </button>
-    
-    <ng-container *ngIf="isAdmin">
-      <mat-divider></mat-divider>
-      <button mat-menu-item routerLink="/admin">
-        <span style="color: #e65100; font-weight: bold;">Panel Admin</span>
-      </button>
+    <ng-container *ngIf="isLoggedIn; else mobileLogin">
+      <button mat-menu-item routerLink="/map"><mat-icon>map</mat-icon><span>Mapa</span></button>
+      <button mat-menu-item routerLink="/favorites"><mat-icon>star</mat-icon><span>Favoritos</span></button>
+      <button mat-menu-item routerLink="/alerts"><mat-icon>notifications_active</mat-icon><span>Alertas</span></button>
+      <button mat-menu-item routerLink="/statistics"><mat-icon>bar_chart</mat-icon><span>Estadísticas</span></button>
+      <button mat-menu-item routerLink="/profile"><mat-icon>person</mat-icon><span>Mi Perfil</span></button>
+      <ng-container *ngIf="isAdmin">
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/admin"><span style="color: #e65100; font-weight: bold;">Panel Admin</span></button>
+      </ng-container>
     </ng-container>
+    <ng-template #mobileLogin>
+      <button mat-menu-item routerLink="/login"><mat-icon>login</mat-icon><span>Iniciar Sesión</span></button>
+      <button mat-menu-item routerLink="/register"><mat-icon>person_add</mat-icon><span>Registrarse</span></button>
+    </ng-template>
   </mat-menu>
 
   <main class="content-area">

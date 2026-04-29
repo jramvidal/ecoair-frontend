@@ -34,6 +34,7 @@ import { AlertsHistoryComponent } from './alerts-history/alerts-history.componen
 import { FavoritesComponent } from './favorites/favorites.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
     FavoritesComponent,
     AdminPanelComponent,
     StatisticsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
