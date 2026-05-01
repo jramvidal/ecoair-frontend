@@ -37,16 +37,16 @@ export class AuthService {
     );
   }
 
-  // --- NUEVO: Método para actualizar el perfil ---
+  /**
+   * Updates user profile data and syncs localStorage
+   */
   updateProfile(userId: number, updateData: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/profile/${userId}`, updateData).pipe(
       tap((updatedUser: any) => {
-        // Actualizamos el localStorage con los nuevos datos recibidos
         localStorage.setItem('userName', updatedUser.name);
         if (updatedUser.healthProfile) {
           localStorage.setItem('healthCondition', updatedUser.healthProfile.condition);
         }
-        // Opcional: Podrías emitir un evento si quieres que otros componentes se enteren
       })
     );
   }
@@ -56,8 +56,16 @@ export class AuthService {
     return id ? parseInt(id, 10) : null;
   }
 
+  /**
+   * Cleans only auth data without clearing the entire localStorage
+   */
   logout() {
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('healthCondition');
+    
     this.loggedIn.next(false);
   }
 

@@ -48,5 +48,39 @@
         <button mat-button color="primary" routerLink="/statistics">DETALLES</button>
       </mat-card-actions>
     </mat-card>
+
+    <div class="welcome-overlay" *ngIf="showWelcome">
+      <mat-card class="welcome-card">
+        <mat-card-header>
+          <div mat-card-avatar class="welcome-avatar">
+            <img src="assets/logo-welcome.png" alt="EcoAir Logo" class="welcome-logo">
+          </div>
+          <mat-card-title>¡Bienvenido a EcoAir!</mat-card-title>
+          <mat-card-subtitle>Calidad del aire en tiempo real</mat-card-subtitle>
+          
+          <button mat-icon-button class="close-x" (click)="closeWelcome()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-card-header>
+
+        <mat-card-content class="welcome-content">
+          <p>
+            Estás viendo el mapa de estaciones de monitoreo ambiental. Puedes navegar libremente y consultar los índices de calidad del aire (AQI) haciendo clic en cada estación. Puedes ampliar las zonas del mapa que te interesen para descubrir nuevas estaciones.
+          </p>
+          
+          <div class="highlight-box">
+            <mat-icon>info</mat-icon>
+            <p> Regístrate e inicia sesión para guardar tus estaciones favoritas, consultar datos históricos de las mismas y recibir alertas de salud personalizadas. </p>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-flat-button color="primary" class="accept-btn" (click)="closeWelcome()">
+            ENTENDIDO
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
   </div>
 </div>

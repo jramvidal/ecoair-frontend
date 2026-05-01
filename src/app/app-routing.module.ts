@@ -26,8 +26,8 @@ const routes: Routes = [
   },
   
   // Security redirects
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: '**', redirectTo: '/login' },
+  { path: '', redirectTo: '/map', pathMatch: 'full' },
+{ path: '**', redirectTo: '/map' },
 ];
 
 @NgModule({

@@ -1,7 +1,9 @@
 import { Component, AfterViewInit, OnDestroy, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
+import { Subscription } from 'rxjs';
 import { StationsService } from '../stations.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-map',
@@ -13,8 +15,10 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
   private stationsLayer = L.layerGroup();
   private defaultView: L.LatLngExpression = [41.3597, 2.1003];
   private resizeObserver: ResizeObserver | null = null;
+  private authSub!: Subscription;
 
   showSummaryCard = false;
+  showWelcome = false; // Controla la visibilidad del cuadro de bienvenida
   userName: string | null = '';
   favoriteDetails: any[] = [];
   userFavorites: any[] = [];
@@ -23,23 +27,48 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
   constructor(
     private router: Router, 
     private stationsService: StationsService,
+    private authService: AuthService,
     private elRef: ElementRef 
   ) {
     this.userName = localStorage.getItem('userName');
   }
 
   ngOnInit(): void {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.showSummaryCard = true;
-      this.loadDashboardAndFavorites(Number(userId), true);
-    }
+    this.authSub = this.authService.isLoggedIn$.subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        // Si el usuario está logueado, ocultamos el cuadro de bienvenida por si acaso
+        this.showWelcome = false;
+
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+          this.showSummaryCard = true;
+          this.userName = localStorage.getItem('userName');
+          this.loadDashboardAndFavorites(Number(userId), true);
+        }
+      } else {
+        // Si el usuario se desloguea o entra como invitado:
+        this.showSummaryCard = false;
+        this.userName = '';
+        this.userFavorites = [];
+        this.favoriteDetails = [];
+        this.isAnyContaminated = false;
+        
+        if (this.map) {
+          this.loadStations();
+        }
+
+        // Comprobamos si el invitado ya vio el mensaje anteriormente
+        const hasSeenWelcome = localStorage.getItem('welcomeSeen');
+        if (!hasSeenWelcome) {
+          this.showWelcome = true;
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
     this.initMap();
 
-    // The watchdog ensures that the map never appears gray or with repeated tiles.
     this.resizeObserver = new ResizeObserver(() => {
       if (this.map) {
         this.map.invalidateSize();
@@ -49,6 +78,9 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnDestroy(): void {
+    if (this.authSub) {
+      this.authSub.unsubscribe();
+    }
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
@@ -57,8 +89,12 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
     }
   }
 
+  closeWelcome(): void {
+    this.showWelcome = false;
+    localStorage.setItem('welcomeSeen', 'true');
+  }
+
   private initMap(): void {
-    // We initialize the map with the default view while the position loads.
     this.map = L.map('map').setView(this.defaultView, 13);
     
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -68,11 +104,7 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
 
     this.stationsLayer.addTo(this.map);
 
-    // EVENT: When the location is found.
     this.map.on('locationfound', (e: L.LocationEvent) => {
-      console.log("📍 Ubicación encontrada con éxito:", e.latlng);
-      
-      // We create a marker to indicate "You are here".
       L.circleMarker(e.latlng, {
         radius: 8,
         fillColor: '#3f51b5',
@@ -81,26 +113,21 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
         fillOpacity: 1
       }).addTo(this.map).bindPopup('Tu ubicación actual');
 
-      // We synchronize stations near your actual position.
       this.stationsService.syncByCoords(e.latlng.lat, e.latlng.lng).subscribe({ 
         next: () => this.loadStations() 
       });
     });
 
-    // EVENT: If there is an error in the location (for example, if the user denies it).
     this.map.on('locationerror', (err) => {
-      console.warn("⚠️ No se pudo obtener la ubicación:", err.message);
-      this.loadStations(); // Cargamos estaciones en la vista por defecto
+      this.loadStations(); 
     });
 
-    // We wait for the layout to be ready before requesting the location.
     setTimeout(() => {
       this.map.invalidateSize();
-      console.log("🔍 Intentando localizar al usuario...");
       this.map.locate({ 
         setView: true, 
         maxZoom: 14,
-        enableHighAccuracy: true // Higher precision for mobile devices.
+        enableHighAccuracy: true 
       });
     }, 500);
 
@@ -176,9 +203,20 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
               box-sizing: border-box;
             `;
 
-            const buttonHtml = isFav 
-              ? `<button id="btn-unfav-${station.id}" style="${baseBtnStyle} background-color: #f44336; color: white;">× DEJAR DE SEGUIR</button>`
-              : `<button id="btn-fav-${station.id}" style="${baseBtnStyle} background-color: #2e7d32; color: white;"><span>⭐</span> GUARDAR FAVORITO</button>`;
+            let actionHtml = '';
+            if (this.authService.isLoggedIn()) {
+              actionHtml = isFav 
+                ? `<button id="btn-unfav-${station.id}" style="${baseBtnStyle} background-color: #f44336; color: white;">× DEJAR DE SEGUIR</button>`
+                : `<button id="btn-fav-${station.id}" style="${baseBtnStyle} background-color: #2e7d32; color: white;"><span>⭐</span> GUARDAR FAVORITO</button>`;
+            } else {
+              actionHtml = `
+                <div style="background-color: #f1f8e9; border-left: 4px solid #43a047; padding: 10px; margin-top: 12px; border-radius: 4px;">
+                  <p style="margin: 0; color: #2e7d32; font-size: 12px; line-height: 1.4;">
+                    <strong>¿Te interesa esta zona?</strong><br>
+                    Regístrate para guardar favoritos y recibir alertas de salud personalizadas.
+                  </p>
+                </div>`;
+            }
 
             return `
               <div style="width: 100%; min-width: 260px; font-family: 'Roboto', sans-serif; padding: 10px; box-sizing: border-box;">
@@ -189,7 +227,7 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
                   <span style="font-size: 12px; color: #888; text-transform: uppercase;">AQI</span>
                 </div>
                 <p style="color: ${statusColor}; font-weight: 600; font-size: 14px;">${statusText}</p>
-                ${buttonHtml}
+                ${actionHtml}
               </div>`;
           };
 
@@ -209,10 +247,12 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
           circle.bindPopup(getPopupHtml(st), { minWidth: 280, maxWidth: 300 });
 
           circle.on('popupopen', () => {
-            const btnFav = document.getElementById(`btn-fav-${st.id}`);
-            if (btnFav) btnFav.onclick = () => this.handleFavorite(st.id, st.name);
-            const btnUnfav = document.getElementById(`btn-unfav-${st.id}`);
-            if (btnUnfav) btnUnfav.onclick = () => this.handleRemoveFavorite(st.id);
+            if (this.authService.isLoggedIn()) {
+              const btnFav = document.getElementById(`btn-fav-${st.id}`);
+              if (btnFav) btnFav.onclick = () => this.handleFavorite(st.id, st.name);
+              const btnUnfav = document.getElementById(`btn-unfav-${st.id}`);
+              if (btnUnfav) btnUnfav.onclick = () => this.handleRemoveFavorite(st.id);
+            }
             this.stationsService.syncStationData(st.external_id).subscribe();
           });
 
@@ -243,7 +283,7 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   logout() {
-    localStorage.clear();
-    this.router.navigate(['/login']);
+    this.authService.logout();
+    this.router.navigate(['/map']);
   }
 }

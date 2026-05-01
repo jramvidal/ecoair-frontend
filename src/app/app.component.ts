@@ -62,8 +62,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.authService.logout();
-    this.alertCount = 0;
-    this.router.navigate(['/login']);
-  }
+  this.authService.logout();
+  this.alertCount = 0;
+  // Redirigimos al mapa en lugar de al login
+  this.router.navigate(['/map']); 
+}
 }
