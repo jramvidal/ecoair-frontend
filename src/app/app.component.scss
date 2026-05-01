@@ -124,6 +124,28 @@
     height: 60px !important;
     .desktop-only { display: none !important; }
     .mobile-only { display: block !important; }
+
+    /* REDUCCIÓN DEL LOGO EN MÓVIL */
+    .logo-text { 
+      font-size: 22px !important; /* Un poco más pequeño para que no empuje a los botones */
+    }
+
+    /* ADAPTACIÓN DE BOTONES PARA MÓVILES */
+    .action-section {
+      gap: 4px !important; /* Reducimos la separación general de la zona */
+
+      button[routerLink="/login"] {
+        font-size: 12px !important; /* Texto un poco más compacto */
+        padding: 0 8px !important; /* Menos espacio interno */
+      }
+
+      button[routerLink="/register"] {
+        font-size: 12px !important; /* Texto un poco más compacto */
+        padding: 0 14px !important; /* Reducimos el padding de 25px a 14px */
+        margin-left: 4px !important; /* Acercamos el botón al login */
+        border-radius: 14px !important; /* Redondeado ajustado al nuevo tamaño */
+      }
+    }
   }
 }
 
