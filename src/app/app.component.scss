@@ -125,27 +125,203 @@
     .desktop-only { display: none !important; }
     .mobile-only { display: block !important; }
 
-    /* REDUCCIÓN DEL LOGO EN MÓVIL */
+    /* LOGO REDUCTION ON MOBILE */
     .logo-text { 
-      font-size: 22px !important; /* Un poco más pequeño para que no empuje a los botones */
+      font-size: 22px !important; /* Slightly smaller so it doesn't push the buttons */
     }
 
-    /* ADAPTACIÓN DE BOTONES PARA MÓVILES */
+    /* ADAPTATION OF BUTTONS FOR MOBILE */
     .action-section {
-      gap: 4px !important; /* Reducimos la separación general de la zona */
+      gap: 4px !important; /* We reduce the overall spacing of the area */
 
       button[routerLink="/login"] {
-        font-size: 12px !important; /* Texto un poco más compacto */
-        padding: 0 8px !important; /* Menos espacio interno */
+        font-size: 12px !important; /* Slightly more compact text */
+        padding: 0 8px !important; /* Less internal padding */
       }
 
       button[routerLink="/register"] {
-        font-size: 12px !important; /* Texto un poco más compacto */
-        padding: 0 14px !important; /* Reducimos el padding de 25px a 14px */
-        margin-left: 4px !important; /* Acercamos el botón al login */
-        border-radius: 14px !important; /* Redondeado ajustado al nuevo tamaño */
+        font-size: 12px !important; /* Slightly more compact text */
+        padding: 0 14px !important; /* We reduce the padding from 25px to 14px */
+        margin-left: 4px !important; /* We move the button closer to the login button */
+        border-radius: 14px !important; /* Border radius adjusted to the new size */
       }
     }
+  }
+
+  /* Badge adjustment on mobile to prevent clipping at the top edge */
+  ::ng-deep .mat-badge-content,
+  ::ng-deep .mat-mdc-badge-content {
+    top: 10px !important;
+    right: 4px !important;
+    width: 18px !important;
+    height: 18px !important;
+    line-height: 18px !important;
+  }
+}
+
+/* Global badge styling */
+::ng-deep .mat-badge-content {
+  font-size: 11px !important;
+  font-weight: bold !important;
+  z-index: 1200 !important;
+}/* Main application layout container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Main toolbar styling */
+.main-header {
+  height: 85px !important;
+  background-color: #43a047 !important;
+  color: white !important;
+  flex-shrink: 0; // Prevents the header from collapsing
+  z-index: 1000; 
+  overflow: visible !important; // Required for tooltips to display correctly
+
+  .left-section { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+  }
+
+  .logo-area { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    cursor: pointer; 
+  }
+
+  .logo-text { 
+    font-size: 30px !important; 
+    font-weight: 700; 
+  }
+
+  .nav-links { 
+    margin-left: 20px; 
+    button { 
+      color: white; 
+      margin: 0 5px; 
+    } 
+  }
+
+  /* Style for active navigation links (left side and login button) */
+  .active-link { 
+    background: rgba(255, 255, 255, 0.2) !important; 
+    border-radius: 4px;
+  }
+
+  .spacer { 
+    flex: 1 1 auto; 
+  }
+
+  .desktop-only { display: flex !important; }
+  .mobile-only { display: none !important; }
+
+  /* Login and Register buttons section */
+  .action-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: visible !important;
+
+    // Login button style (discreet text)
+    button[routerLink="/login"] {
+      color: white !important;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+      }
+    }
+
+    // Register button style (Option A: prominent white button)
+    button[routerLink="/register"] {
+      background-color: white !important;
+      color: #43a047 !important; 
+      font-weight: bold;
+      border-radius: 20px !important; 
+      margin-left: 12px; // Space to separate it from the Login text
+      padding: 0 25px !important;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: #f1f8e9 !important; 
+      }
+    }
+
+    // Highlighting for the Register button when its route is active
+    .active-register {
+      background-color: #e8f5e9 !important; // Light mint green
+      border: 1px solid #2e7d32 !important;
+      color: #1b5e20 !important;
+    }
+  }
+}
+
+/* Main content scrolling area */
+.content-area {
+  flex: 1; 
+  width: 100%;
+  display: flex; 
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  background-color: #f5f5f5;
+}
+
+/* Internal container for page content */
+.main-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 800px) {
+  .main-header {
+    height: 60px !important;
+    .desktop-only { display: none !important; }
+    .mobile-only { display: block !important; }
+
+    /* LOGO REDUCTION ON MOBILE */
+    .logo-text { 
+      font-size: 22px !important; /* Slightly smaller so it doesn't push the buttons */
+    }
+
+    /* ADAPTATION OF BUTTONS FOR MOBILE */
+    .action-section {
+      gap: 4px !important; /* We reduce the overall spacing of the area */
+
+      button[routerLink="/login"] {
+        font-size: 12px !important; /* Slightly more compact text */
+        padding: 0 8px !important; /* Less internal padding */
+      }
+
+      button[routerLink="/register"] {
+        font-size: 12px !important; /* Slightly more compact text */
+        padding: 0 14px !important; /* We reduce the padding from 25px to 14px */
+        margin-left: 4px !important; /* We move the button closer to the login button */
+        border-radius: 14px !important; /* Border radius adjusted to the new size */
+      }
+    }
+  }
+
+  /* Badge adjustment on mobile to prevent clipping at the top edge */
+  ::ng-deep .mat-badge-content,
+  ::ng-deep .mat-mdc-badge-content {
+    top: 10px !important;
+    right: 4px !important;
+    width: 18px !important;
+    height: 18px !important;
+    line-height: 18px !important;
   }
 }
 
