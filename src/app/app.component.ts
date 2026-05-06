@@ -37,8 +37,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isLoggedIn = status;
       if (status) {
         this.updateAlertCount();
-        // Cuando hay un usuario logueado, pedimos permiso y enviamos el token al backend
-        this.pushNotificationService.requestPermissionAndGetToken();
       }
     });
 

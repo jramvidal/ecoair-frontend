@@ -5,13 +5,19 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { environment } from '../environments/environment';
 import { AuthService } from './auth.service';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Injectable({
   providedIn: 'root'
 })
 export class PushNotificationService {
   private messaging: any;
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(
+    private http: HttpClient, 
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {
     try {
       // Inicializamos la app de Firebase con la config que pusimos en environment
       const app = initializeApp(environment.firebase);
@@ -32,9 +38,13 @@ export class PushNotificationService {
       if (permission === 'granted') {
         console.log('Permiso de notificaciones concedido.');
         
-        // Obtenemos el token de FCM usando la clave VAPID
+        // Aseguramos que el Service Worker de Firebase esté registrado
+        const registration = await navigator.serviceWorker.register('/firebase-messaging-sw.js');
+
+        // Obtenemos el token de FCM usando la clave VAPID y el Service Worker correcto
         const currentToken = await getToken(this.messaging, {
-          vapidKey: environment.firebase.vapidKey
+          vapidKey: environment.firebase.vapidKey,
+          serviceWorkerRegistration: registration
         });
 
         if (currentToken) {
@@ -60,8 +70,17 @@ export class PushNotificationService {
 
     onMessage(this.messaging, (payload) => {
       console.log('Notificación recibida en PRIMER PLANO:', payload);
-      // Aquí podrías mostrar un Toast/Snackbar en Angular para avisar al usuario
-      // de la alerta mientras navega.
+      
+      const title = payload.notification?.title || 'Nueva Alerta';
+      const body = payload.notification?.body || '';
+      
+      // Muestra un mensajito visual dentro de la app (SnackBar)
+      this.snackBar.open(`${title}: ${body}`, 'CERRAR', {
+        duration: 8000,
+        horizontalPosition: 'end',
+        verticalPosition: 'bottom',
+        panelClass: ['push-notification-snackbar']
+      });
     });
   }
 
