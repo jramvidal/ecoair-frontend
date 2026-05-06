@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { StationsService } from './stations.service';
 import { AuthService } from './auth.service';
+import { PushNotificationService } from './push-notification.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router, 
     private stationsService: StationsService,
-    private authService: AuthService
+    private authService: AuthService,
+    private pushNotificationService: PushNotificationService
   ) {}
 
   get isAdmin(): boolean {
@@ -35,6 +37,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isLoggedIn = status;
       if (status) {
         this.updateAlertCount();
+        // Cuando hay un usuario logueado, pedimos permiso y enviamos el token al backend
+        this.pushNotificationService.requestPermissionAndGetToken();
       }
     });
 
