@@ -32,10 +32,9 @@ export class PushNotificationService {
       if (permission === 'granted') {
         console.log('Permiso de notificaciones concedido.');
         
-        // Obtenemos el token de FCM. (No necesitas vapidKey si usas la config por defecto,
-        // pero en producción es buena práctica pasarla).
+        // Obtenemos el token de FCM usando la clave VAPID
         const currentToken = await getToken(this.messaging, {
-          // vapidKey: 'TU_LLAVE_PUBLICA_DE_FIREBASE_AQUI' // (Opcional, de la consola Web Push)
+          vapidKey: environment.firebase.vapidKey
         });
 
         if (currentToken) {

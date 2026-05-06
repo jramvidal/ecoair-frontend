@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Opcional para feedback visual
+import { PushNotificationService } from '../push-notification.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,9 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private pushNotificationService: PushNotificationService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -77,5 +80,16 @@ export class ProfileComponent implements OnInit {
         alert('Hubo un error al guardar los cambios.');
       }
     });
+  }
+
+  enableNotifications() {
+    this.pushNotificationService.requestPermissionAndGetToken()
+      .then(() => {
+        this.snackBar.open('Permisos solicitados. Si has aceptado, recibirás notificaciones en este dispositivo.', 'OK', { duration: 4000 });
+      })
+      .catch((err) => {
+        console.error(err);
+        this.snackBar.open('Error al solicitar permisos', 'OK', { duration: 3000 });
+      });
   }
 }
