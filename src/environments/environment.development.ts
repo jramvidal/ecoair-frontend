@@ -7,6 +7,7 @@ export const environment = {
     projectId: "ecoair-app",
     storageBucket: "ecoair-app.firebasestorage.app",
     messagingSenderId: "1073768602826",
-    appId: "1:1073768602826:web:a0ea2911767f93cd1ba833"
+    appId: "1:1073768602826:web:a0ea2911767f93cd1ba833",
+    vapidKey: "BNL7uzZUgwbsDnoDOUKc4ZXt1BVD0rpr-sCkwsP8_XXSzyOFnpgqk96gb7iPdd4r1lqmhVwm73Ogsmv2reWdld0"
   }
 };
