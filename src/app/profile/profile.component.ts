@@ -81,15 +81,4 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
-
-  enableNotifications() {
-    this.pushNotificationService.requestPermissionAndGetToken()
-      .then(() => {
-        this.snackBar.open('Permisos solicitados. Si has aceptado, recibirás notificaciones en este dispositivo.', 'OK', { duration: 4000 });
-      })
-      .catch((err) => {
-        console.error(err);
-        this.snackBar.open('Error al solicitar permisos', 'OK', { duration: 3000 });
-      });
-  }
 }
