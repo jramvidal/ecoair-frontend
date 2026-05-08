@@ -30,7 +30,7 @@
                 {{ fav.currentAqi }} AQI
               </span>
               <span class="status-label" [style.color]="getAqiColor(fav.currentAqi)">
-                • {{ fav.currentAqi < 50 ? 'Aire Limpio' : 'Contaminación Elevada' }}
+                • {{ getIcaStatus(fav.currentAqi).text }} <span style="font-size: 0.8em; font-weight: normal; opacity: 0.7;">(ICA)</span>
               </span>
             </div>
           </div>

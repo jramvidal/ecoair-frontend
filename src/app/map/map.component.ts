@@ -163,9 +163,16 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   getAqiColor(aqi: number): string {
-    if (aqi < 50) return '#4caf50'; 
-    if (aqi < 100) return '#ff9800'; 
-    return '#f44336'; 
+    return this.getIcaStatus(aqi).color;
+  }
+
+  getIcaStatus(aqi: number): { text: string; color: string } {
+    if (aqi <= 50) return { text: 'Muy Bueno', color: '#2e7d32' };
+    if (aqi <= 100) return { text: 'Bueno', color: '#2e7d32' };
+    if (aqi <= 150) return { text: 'Razonable', color: '#ff9800' };
+    if (aqi <= 200) return { text: 'Pobre', color: '#f44336' };
+    if (aqi <= 300) return { text: 'Muy Pobre', color: '#f44336' };
+    return { text: 'Extremadamente Pobre', color: '#f44336' };
   }
 
   closeCard() { this.showSummaryCard = false; }
@@ -189,8 +196,8 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
             const lastM = station.measurements?.[0];
             const aqi = lastM ? lastM.aqi : 0;
             const dateTimeStr = lastM ? new Date(lastM.timestamp).toLocaleString() : 'Sin datos';
-            const statusText = aqi < 50 ? 'Estado: Aire Limpio' : 'Estado: Aire Excesivamente Contaminado';
-            const statusColor = aqi < 50 ? '#2e7d32' : '#f44336';
+            const icaStatus = this.getIcaStatus(aqi);
+            const statusColor = icaStatus.color;
             const isFav = this.userFavorites.some(f => f.station.id === station.id);
 
             const baseBtnStyle = `
@@ -226,7 +233,9 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
                   <span style="font-size: 28px; font-weight: bold;">${aqi}</span>
                   <span style="font-size: 12px; color: #888; text-transform: uppercase;">AQI</span>
                 </div>
-                <p style="color: ${statusColor}; font-weight: 600; font-size: 14px;">${statusText}</p>
+                <p style="color: ${statusColor}; font-weight: 600; font-size: 14px; margin: 0;">
+                  Estado: ${icaStatus.text} <span style="font-size: 11px; color: #888; font-weight: normal;">(ICA)</span>
+                </p>
                 ${actionHtml}
               </div>`;
           };
@@ -234,7 +243,7 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnInit {
           const lastM = st.measurements?.[0];
           const aqi = lastM?.aqi || 0;
           const isFav = this.userFavorites.some(f => f.station.id === st.id);
-          const color = aqi >= 50 ? '#f44336' : '#2e7d32';
+          const color = this.getIcaStatus(aqi).color;
 
           const circle = L.circle([st.lat, st.lon], { 
             color: isFav ? '#FFD600' : color, 

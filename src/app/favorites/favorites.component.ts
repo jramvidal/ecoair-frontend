@@ -18,7 +18,16 @@ export class FavoritesComponent implements OnInit {
 
   getAqiColor(aqi: number): string {
     if (!aqi) return '#999';
-    return aqi < 50 ? '#2e7d32' : '#f44336';
+    return this.getIcaStatus(aqi).color;
+  }
+
+  getIcaStatus(aqi: number): { text: string; color: string } {
+    if (aqi <= 50) return { text: 'Muy Bueno', color: '#2e7d32' };
+    if (aqi <= 100) return { text: 'Bueno', color: '#2e7d32' };
+    if (aqi <= 150) return { text: 'Razonable', color: '#ff9800' };
+    if (aqi <= 200) return { text: 'Pobre', color: '#f44336' };
+    if (aqi <= 300) return { text: 'Muy Pobre', color: '#f44336' };
+    return { text: 'Extremadamente Pobre', color: '#f44336' };
   }
 
   loadFavorites() {
