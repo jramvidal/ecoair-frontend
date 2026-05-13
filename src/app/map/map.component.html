@@ -5,7 +5,7 @@
     <mat-card class="dashboard-card" *ngIf="showSummaryCard">
       <mat-card-header>
         <mat-card-title>Bienvenido, {{ userName }}</mat-card-title>
-        <button mat-icon-button aria-label="Cerrar panel de estaciones" class="close-btn" (click)="closeCard()">
+        <button mat-icon-button class="close-btn" (click)="closeCard()">
           <mat-icon>close</mat-icon>
         </button>
       </mat-card-header>
@@ -58,7 +58,7 @@
           <mat-card-title>¡Bienvenido a EcoAir!</mat-card-title>
           <mat-card-subtitle>Calidad del aire en tiempo real</mat-card-subtitle>
           
-          <button mat-icon-button aria-label="Cerrar bienvenida" class="close-x" (click)="closeWelcome()">
+          <button mat-icon-button class="close-x" (click)="closeWelcome()">
             <mat-icon>close</mat-icon>
           </button>
         </mat-card-header>

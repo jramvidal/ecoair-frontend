@@ -1,7 +1,7 @@
 <div class="app-container">
   <mat-toolbar color="primary" class="main-header">
     <div class="left-section">
-      <button mat-icon-button aria-label="Abrir menú principal" class="mobile-only" [matMenuTriggerFor]="mainMenu">
+      <button mat-icon-button class="mobile-only" [matMenuTriggerFor]="mainMenu">
         <mat-icon>menu</mat-icon>
       </button>
 
@@ -27,7 +27,6 @@
     <div class="action-section">
       <ng-container *ngIf="isLoggedIn; else loginBtn">
         <button mat-icon-button 
-                aria-label="Ver alertas"
                 routerLink="/alerts" 
                 [matBadge]="alertCount" 
                 [matBadgeHidden]="alertCount <= 0" 
@@ -38,14 +37,13 @@
         </button>
 
         <button mat-icon-button 
-                aria-label="Ir a mi perfil"
                 routerLink="/profile" 
                 matTooltip="Mi Perfil: {{userName}}"
                 matTooltipPosition="below">
           <mat-icon>account_circle</mat-icon>
         </button>
 
-        <button mat-icon-button aria-label="Cerrar sesión" (click)="logout()" matTooltip="Cerrar sesión" matTooltipPosition="below">
+        <button mat-icon-button (click)="logout()" matTooltip="Cerrar sesión" matTooltipPosition="below">
           <mat-icon>logout</mat-icon>
         </button>
       </ng-container>
