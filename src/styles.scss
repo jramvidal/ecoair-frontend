@@ -67,3 +67,22 @@ body {
   ) !important; // Un tono azulado oscuro acorde a tu color de texto
   font-size: 12px !important;
 }
+
+/* Custom styles for the mobile menu overlay (must be global because overlays are rendered outside app-root) */
+.mobile-menu-panel {
+  --mat-menu-item-label-text-color: #2c3e50 !important;
+  --mat-menu-item-icon-color: #43a047 !important;
+  --mat-menu-item-hover-state-layer-color: rgba(67, 160, 71, 0.1) !important;
+}
+
+.mobile-menu-panel .mat-mdc-menu-item,
+.mobile-menu-panel .mat-menu-item,
+.mobile-menu-panel span {
+  color: #2c3e50 !important;
+}
+
+.mobile-menu-panel .mat-mdc-menu-item .mat-icon,
+.mobile-menu-panel .mat-menu-item .mat-icon,
+.mobile-menu-panel .mat-icon {
+  color: #43a047 !important;
+}

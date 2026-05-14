@@ -56,7 +56,7 @@
     </div>
   </mat-toolbar>
 
-  <mat-menu #mainMenu="matMenu">
+  <mat-menu #mainMenu="matMenu" class="mobile-menu-panel" backdropClass="mobile-menu-backdrop">
     <ng-container *ngIf="isLoggedIn; else mobileLogin">
       <button mat-menu-item routerLink="/map"><mat-icon>map</mat-icon><span>Mapa</span></button>
       <button mat-menu-item routerLink="/favorites"><mat-icon>star</mat-icon><span>Favoritos</span></button>
